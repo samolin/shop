@@ -6,6 +6,7 @@ from app.db.database import get_db, engine
 from app.db.CRUD.users import list_users
 from app.db.base import Base
 
+
 def create_tables():
     Base.metadata.create_all(bind=engine)
 
@@ -19,6 +20,7 @@ def start_application():
 
 
 app = start_application()
+
 
 @app.get("/")
 def test(db: Session = Depends(get_db)):

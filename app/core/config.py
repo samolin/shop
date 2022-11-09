@@ -22,4 +22,5 @@ class Settings:
         f"@{POSTGRES_SERVER}:{POSTGRES_PORT}/{POSTGRES_DB}"
     )
 
+
 settings = Settings()
