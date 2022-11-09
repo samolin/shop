@@ -15,11 +15,26 @@ psycopg2 = "^2.9.5"
 sqlalchemy-utils = "^0.38.3"
 pre-commit = "^2.20.0"
 black = "^22.10.0"
+isort = "^5.10.1"
+autoflake = "^1.7.7"
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+
+[tool.autoflake]
+remove-all-unused-imports = true
+ignore-init-module-imports = true
+remove-unused-variables = true
+in-place = true
+recursive = true
+
+
+[tool.isort]
+profile = "black"
+line_length = 79
 
 
 [tool.black]

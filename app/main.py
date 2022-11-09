@@ -1,10 +1,10 @@
-from fastapi import FastAPI, Depends
+from fastapi import Depends, FastAPI
 from sqlalchemy.orm import Session
 
 from app.core.config import settings
-from app.db.database import get_db, engine
-from app.db.CRUD.users import list_users
 from app.db.base import Base
+from app.db.CRUD.users import list_users
+from app.db.database import engine, get_db
 
 
 def create_tables():
