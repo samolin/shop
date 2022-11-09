@@ -4,11 +4,10 @@ from sqlalchemy import (
     String,
     Boolean,
 )
-from ..database import Base
+from ..base_class import Base
 
 
 class User(Base):
-    __tablename__ = "users"
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String, nullable=False, unique=True)
     email = Column(String, unique=True, nullable=False)
