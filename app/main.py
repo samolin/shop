@@ -1,11 +1,13 @@
-from fastapi import Depends, FastAPI
-from sqlalchemy.orm import Session
+from fastapi import FastAPI
 
 from app.core.config import settings
 from app.db.base import Base
-from app.db.CRUD.users import create_new_user, list_users
-from app.db.database import engine, get_db
-from app.schemas.users import UserCreate
+from app.db.database import engine
+from app.routers.base import api_router
+
+
+def include_router(app):
+    app.include_router(api_router)
 
 
 def create_tables():
@@ -17,19 +19,8 @@ def start_application():
         title=settings.PROJECT_NAME, version=settings.PROJECT_VERSION
     )
     create_tables()
+    include_router(app)
     return app
 
 
 app = start_application()
-
-
-@app.get("/")
-def test(db: Session = Depends(get_db)):
-    users = list_users(db)
-    return users
-
-
-@app.post("/")
-def create_user(user: UserCreate, db: Session = Depends(get_db)):
-    user = create_new_user(user=user, db=db)
-    return user

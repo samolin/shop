@@ -8,6 +8,11 @@ down:
 	@docker-compose down 
 
 
+.PHONY: start
+start:
+	@poetry run uvicorn app.main:app --reload
+
+
 .PHONY: autoflake_format
 autoflake_format: ## Format project with autoflake
 	@poetry run autoflake ./app
