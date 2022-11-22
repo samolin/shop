@@ -5,5 +5,5 @@
 /app/db/CRUD/__pycache__/
 /app/core/__pycache__/
 /app/schemas/__pycache__/
-app/db/models/posts.py
+/app/routers/__pycache__/
 .env

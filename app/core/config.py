@@ -21,5 +21,10 @@ class Settings:
         f"@{POSTGRES_SERVER}:{POSTGRES_PORT}/{POSTGRES_DB}"
     )
 
+    """TOKEN"""
+    SECRET_KEY: str = os.getenv("SECRET_KEY")
+    ALGORITHM = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES = 60
+    TEST_USER_EMAIL = "test@example.com"
 
 settings = Settings()
