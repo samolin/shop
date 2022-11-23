@@ -6,4 +6,3 @@ class ProductCreate(BaseModel):
     description: str
     price: int
     category: str
-    owner: int

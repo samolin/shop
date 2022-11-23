@@ -27,4 +27,5 @@ class Settings:
     ACCESS_TOKEN_EXPIRE_MINUTES = 60
     TEST_USER_EMAIL = "test@example.com"
 
+
 settings = Settings()

@@ -10,13 +10,13 @@ def list_posts(db: Session):
     return posts
 
 
-def create_new_product(product: ProductCreate, db: Session):
+def create_new_product(product: ProductCreate, db: Session, current_user: int):
     post = Product(
         name=product.name,
         description=product.description,
         price=product.price,
-        category=product.category,
-        owner=product.owner,
+        category="nocat",
+        owner=current_user,
     )
     db.add(post)
     db.commit()

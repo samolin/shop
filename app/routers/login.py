@@ -1,13 +1,15 @@
-from fastapi import APIRouter, Depends, HTTPException, status, Response
-from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
-from sqlalchemy.orm import Session
 from datetime import timedelta
 
+from fastapi import APIRouter, Depends, HTTPException, Response, status
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from jose import JWTError, jwt
+from sqlalchemy.orm import Session
+
+from app.core.config import settings
 from app.core.hashing import Hasher
+from app.core.security import create_access_token
 from app.db.CRUD.users import get_user
 from app.db.database import get_db
-from app.core.security import create_access_token
-from app.core.config import settings
 from app.schemas.token import Token
 
 router = APIRouter()
@@ -54,9 +56,35 @@ def login_for_access_token(
         minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES
     )
     access_token = create_access_token(
-        data={"sub": user.email}, expires_delta=access_token_expires
+        data={"sub": user.username}, expires_delta=access_token_expires
     )
     response.set_cookie(
         key="access_token", value=f"Bearer {access_token}", httponly=True
     )
     return {"access_token": access_token, "token_type": "bearer"}
+
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login/token")
+
+
+def get_current_user_by_token(
+    token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)
+):
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Couldn't validate credentials",
+    )
+    try:
+        payload = jwt.decode(
+            token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM]
+        )
+        username = payload.get("sub")
+        print(payload)
+        if username is None:
+            raise credentials_exception
+    except JWTError:
+        raise credentials_exception
+    user = get_user(username=username, db=db)
+    if user is None:
+        raise credentials_exception
+    return user
