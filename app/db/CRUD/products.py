@@ -11,14 +11,14 @@ def list_posts(db: Session):
 
 
 def create_new_product(product: ProductCreate, db: Session, current_user: int):
-    post = Product(
+    product = Product(
         name=product.name,
         description=product.description,
         price=product.price,
         category="nocat",
         owner=current_user,
     )
-    db.add(post)
+    db.add(product)
     db.commit()
-    db.refresh(post)
-    return post
+    db.refresh(product)
+    return product

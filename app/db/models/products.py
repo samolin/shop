@@ -8,5 +8,5 @@ class Product(Base):
     name = Column(String, nullable=False, unique=True)
     description = Column(String, nullable=False)
     price = Column(Integer, nullable=False)
-    category = Column(String, nullable=False)
+    category = Column(Integer, ForeignKey("category.id"), nullable=False)
     owner = Column(Integer, ForeignKey("user.id"), nullable=False)
