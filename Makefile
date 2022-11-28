@@ -10,7 +10,7 @@ down:
 
 .PHONY: start
 start:
-	@poetry run uvicorn app.main:app --reload
+	@poetry run uvicorn app.main:app --reload --ssl-keyfile=./localhost+2-key.pem --ssl-certfile=./localhost+2.pem
 
 
 .PHONY: autoflake_format
