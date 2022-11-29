@@ -11,3 +11,4 @@ localhost+2.pem
 localhost+2-key.pem
 /app/web/auth/__pycache__/
 /app/web/__pycache__/
+app/static/prods_img/*
