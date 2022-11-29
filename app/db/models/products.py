@@ -10,3 +10,4 @@ class Product(Base):
     price = Column(Integer, nullable=False)
     category = Column(Integer, ForeignKey("category.id"), nullable=False)
     owner = Column(Integer, ForeignKey("user.id"), nullable=False)
+    img = Column(String)
